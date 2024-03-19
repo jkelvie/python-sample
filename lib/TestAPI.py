@@ -7,11 +7,9 @@ BASE_URL = "https://monolith.bespoken.io"
 if os.environ.get('BESPOKEN_API_BASE_URL') is not None:
     BASE_URL = os.environ.get('BESPOKEN_API_BASE_URL')
 
-class TestAPI:
-    
+class TestAPI:    
     def __init__(self, api_key):
         self.api_key = api_key
-
 
     def run_test(self, test_suite_name, variables={}):
         # The API endpoint
@@ -47,7 +45,7 @@ class TestAPI:
             status_response = requests.get(status_url)
             response_json = status_response.json()
             if count % 5 == 0:
-                print('Time: ', count, ' Status response: ', response_json)
+                print('Test name: ', test_suite_name, ' Time: ', count, ' Status response: ', response_json)
 
             count += 1
         

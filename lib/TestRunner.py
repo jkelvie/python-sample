@@ -15,12 +15,6 @@ class TestRunner:
 
     def add_result(self, result):
         self.results.append(result)
-        print('captured result for: ', result.scenario.test_name)
-        printer = Printer('output/out.csv')
-        try:
-            printer.print(self.results)
-        except Exception as e:
-            print('error on printing: ', repr(e))
 
     def start(self):
         threads = []
@@ -34,12 +28,27 @@ class TestRunner:
             thread = TestThread(self, scenarios)
             thread.start()
             threads.append(thread)
+
+        while (True):
+            all_completed = True
+            for thread in threads:
+                all_completed = all_completed and thread.completed
+                time.sleep(1)
+            
+            if all_completed: break
+
+        printer = Printer('output/out.csv')
+        try:
+            printer.print(self.results)
+        except Exception as e:
+            print('error on printing: ', repr(e))
             
 
 class TestThread:
     def __init__(self, runner, scenarios):
         self.runner = runner
         self.scenarios = scenarios
+        self.completed = False
 
     def start(self): 
         self.thread = threading.Thread(target=self.run, args={})
@@ -53,10 +62,8 @@ class TestThread:
             print('Ran scenario: ', scenario.test_name)
             result = TestResult(scenario, result_json)
             self.runner.add_result(result)
-            try:
-                print('last response: ', result.last_response())
-            except:
-                print('error getting last response')
+        
+        self.completed = True
             
 
 class TestScenario:
@@ -76,7 +83,6 @@ class TestResult:
         # print('interaction length: ', len(last_result['interactions']))
         # print('last interaction: ', json.dumps(last_interaction))
         last_value = last_interaction['actualValue']
-        print('last value: ', last_value)
         
         if 'Open menu' in last_value:
             last_value = last_value.split('Open menu')[1]
@@ -85,7 +91,7 @@ class TestResult:
             last_value = last_value.split('Was this helpful?')[0]
         
         last_value = last_value.replace('\n', ' ')
-        return last_value
+        return last_value.strip()
 
 
 TEST_SCENARIOS = [
