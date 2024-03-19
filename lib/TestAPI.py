@@ -34,6 +34,7 @@ class TestAPI:
         print('Initial response: ', response_json)
 
         run_id = response_json['id']
+        count = 0
         while response_json['status'] == 'IN_PROGRESS':
             time.sleep(1)
             status_url = "{base_url}/api/test-run/{test_run_id}?api-key={api_key}".format(
@@ -41,12 +42,16 @@ class TestAPI:
                 base_url=BASE_URL,
                 test_run_id=run_id
             )
-            print("Run status URL: ", status_url)
+            #print("Run status URL: ", status_url)
 
             status_response = requests.get(status_url)
             response_json = status_response.json()
-            print('Status response: ', response_json)
+            if count % 5 == 0:
+                print('Time: ', count, ' Status response: ', response_json)
+
+            count += 1
         
+        return response_json
         print('Final response received!')
 
 
