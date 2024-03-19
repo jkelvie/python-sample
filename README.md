@@ -1,5 +1,5 @@
 # Overview
-This project demonstrates how to use the Bespoken API to run templated tests in Python.
+This project demonstrates how to use the [Bespoken API](https://test-api.bespoken.io/api/docs/) to run templated tests in Python.
 
 It requires Python3.
 
@@ -46,7 +46,7 @@ The templated test for location inquiries look like this:
 
 <img src='./docs/LocationQuestion.png' style='width: 600px' />
 
-In each case, the variables in the test scenario code should match the variables in the test.
+In each case, the names of the variables in the test scenario code should match the variables in the test.
 
 # Running the tests
 Run the test with the command:
