@@ -3,8 +3,9 @@ import os
 import requests
 import time
 
-#BASE_URL = "https://monolith.bespoken.io"
-BASE_URL = "http://localhost:3001"
+BASE_URL = "https://monolith.bespoken.io"
+if os.environ.get('BESPOKEN_API_BASE_URL') is not None:
+    BASE_URL = os.environ.get('BESPOKEN_API_BASE_URL')
 
 class TestAPI:
     
