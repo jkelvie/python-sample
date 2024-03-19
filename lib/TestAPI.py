@@ -1,8 +1,10 @@
+import json
 import os
 import requests
 import time
 
-BASE_URL = "https://monolith.bespoken.io"
+#BASE_URL = "https://monolith.bespoken.io"
+BASE_URL = "http://localhost:3001"
 
 class TestAPI:
     
@@ -10,28 +12,21 @@ class TestAPI:
         self.api_key = api_key
 
 
-    def run_test(self, test_suite_name):
+    def run_test(self, test_suite_name, variables={}):
         # The API endpoint
         url = "{base_url}/api/test-suite/{test_suite_name}/run?api-key={api_key}".format(
             api_key=self.api_key,
             base_url=BASE_URL,
             test_suite_name=test_suite_name
         )
-        print("URL: ", url)
+        print("Running test with URL: ", url, " Data: ", json.dumps(variables))
 
-                # Define new data to create
-        # new_data = {
-        #     "userID": 1,
-        #     "id": 1,
-        #     "title": "Making a POST request",
-        #     "body": "This is the data we created."
-        # }
 
         # # The API endpoint to communicate with
         # url_post = "https://jsonplaceholder.typicode.com/posts"
 
         # A POST request to tthe API
-        post_response = requests.post(url, json={})
+        post_response = requests.post(url, json=variables)
 
         # Print the response
         response_json = post_response.json()
@@ -60,4 +55,7 @@ if __name__ == "__main__":
         raise Exception('Environment variable BESPOKEN_API_KEY must be set')
     
     testAPI = TestAPI(api_key)
-    testAPI.run_test('945d7cd8-c782-4fea-8af6-eddede757f9f')
+    testAPI.run_test('Dun and Bradstreet - Location', {
+        'COMPANY_NAME': 'Pfizer',
+        'EXPECTED_LOCATION': 'New York'
+    })

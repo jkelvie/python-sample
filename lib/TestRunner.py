@@ -1,3 +1,4 @@
+import math
 import sys
 import threading
 import time
@@ -11,7 +12,7 @@ class TestRunner:
         for i in range(0, self.concurrency):
             scenarios_per_thread = len(TEST_SCENARIOS) / 2
             start_index = int(i * scenarios_per_thread)
-            end_index = int((i+1) * scenarios_per_thread)
+            end_index = int(math.ceil((i+1) * scenarios_per_thread))
             print('Starting thread: ', i, ' Scenarios Per Thread: ', scenarios_per_thread, ' start: ', start_index, ' end: ', end_index)
             
             scenarios = TEST_SCENARIOS[start_index:end_index]
@@ -43,9 +44,9 @@ class TestScenario:
 
 TEST_SCENARIOS = [
     TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
-    TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
-    TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
-    TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {})
+    # TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
+    # TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
+    # TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {})
 ]
 
 if __name__ == "__main__":
