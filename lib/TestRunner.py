@@ -17,7 +17,10 @@ class TestRunner:
         self.results.append(result)
         print('captured result for: ', result.scenario.test_name)
         printer = Printer('output/out.csv')
-        printer.print()
+        try:
+            printer.print(self.results)
+        except:
+            print('error')
 
     def start(self):
         threads = []
@@ -49,7 +52,7 @@ class TestThread:
             result_json = testAPI.run_test(scenario.test_name, scenario.test_variables)
             print('Ran scenario: ', scenario.test_name)
             result = TestResult(scenario, result_json)
-            runner.add_result(result)
+            self.runner.add_result(result)
             try:
                 print('last response: ', result.last_response())
             except:
