@@ -1,9 +1,14 @@
 import csv  
 import json
+import os
 
 class Printer:
     def __init__(self, output_file):
         self.output_file = output_file
+        
+        # Create the output directory if it does not exist
+        if not os.path.exists('output'):
+            os.makedirs('output')
 
     def print(self, results):
         header = ['Test', 'Variables', 'Result']

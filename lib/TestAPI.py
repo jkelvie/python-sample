@@ -44,7 +44,7 @@ class TestAPI:
 
             status_response = requests.get(status_url)
             response_json = status_response.json()
-            if count % 5 == 0:
+            if count % 5 == 0 and response_json['status'] == 'IN_PROGRESS':
                 print('Test name: ', test_suite_name, ' Time: ', count, ' Status response: ', response_json)
 
             count += 1
