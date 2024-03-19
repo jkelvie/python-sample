@@ -6,7 +6,7 @@ class Printer:
         self.output_file = output_file
 
     def print(self, results):
-        header = ['Test', 'Variables', 'Result', 'URL']
+        header = ['Test', 'Variables', 'Result']
         #data = ['Afghanistan', 652090, 'AF', 'AFG']
 
         with open(self.output_file, 'w', encoding='UTF8') as f:
@@ -16,6 +16,14 @@ class Printer:
             writer.writerow(header)
 
             for result in results:
-                data = [result.scenario.test_name, json.dumps(result.scenario.test_variables), '', '']
+                variables = self.variables_to_string(result.scenario.test_variables)
+                data = [result.scenario.test_name, variables, result.last_response()]
                 # write the data
                 writer.writerow(data)
+
+    def variables_to_string(self, variables):
+        s = ''
+        for key in variables.keys():
+            value = variables[key]
+            s += key + ': ' + value + ';'
+        return s

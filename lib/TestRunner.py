@@ -19,8 +19,8 @@ class TestRunner:
         printer = Printer('output/out.csv')
         try:
             printer.print(self.results)
-        except:
-            print('error')
+        except Exception as e:
+            print('error on printing: ', repr(e))
 
     def start(self):
         threads = []
@@ -72,13 +72,19 @@ class TestResult:
 
     def last_response(self):
         last_result = self.json['results'][0]
-        print('last result: ', json.dumps(last_result))
         last_interaction = last_result['interactions'][len(last_result['interactions']) - 1]
-        print('interaction length: ', len(last_result['interactions']))
-        print('last interaction: ', json.dumps(last_interaction))
+        # print('interaction length: ', len(last_result['interactions']))
+        # print('last interaction: ', json.dumps(last_interaction))
         last_value = last_interaction['actualValue']
         print('last value: ', last_value)
         
+        if 'Open menu' in last_value:
+            last_value = last_value.split('Open menu')[1]
+
+        if 'Was this helpful?' in last_value:
+            last_value = last_value.split('Was this helpful?')[0]
+        
+        last_value = last_value.replace('\n', ' ')
         return last_value
 
 
@@ -86,6 +92,10 @@ TEST_SCENARIOS = [
     TestScenario('Dun and Bradstreet - Location', {
         'COMPANY_NAME': 'Pfizer',
         'EXPECTED_LOCATION': 'New York',
+    }),
+    TestScenario(
+        'Dun And Bradstreet Template', {
+        'COMPANY_NAME': 'Apple'
     }),
     # TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),
     # TestScenario('945d7cd8-c782-4fea-8af6-eddede757f9f', {}),

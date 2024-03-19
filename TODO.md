@@ -1,5 +1,7 @@
-* Variables to comma-delimited string
-* URL link - to Dashboard or to raw API? Or both?
-* Second test
-* Fuzzy match if necessary
-* Test concurrency
+- [X] Variables to comma-delimited string
+- [X] URL link - to Dashboard or to raw API? Or both?
+- [X] Second test
+- [ ] Fuzzy match if necessary
+- [ ] Use chromium connection
+- [X] Test concurrency
+- [ ] Publish github repo

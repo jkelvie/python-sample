@@ -31,7 +31,7 @@ class TestAPI:
 
         # Print the response
         response_json = post_response.json()
-        print('Initial response: ', response_json)
+        print('Test name', test_suite_name, ' Initial response: ', response_json)
 
         run_id = response_json['id']
         count = 0
